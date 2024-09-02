@@ -63,7 +63,7 @@ export default function Signup() {
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600 ">
                         have an account?{" "}
-                        <a href="#" title=""
+                        <a href="#" title="" onClick={ () => navigate('/login')}
                             className="font-semibold text-black transition-all duration-200 hover:underline" >
                             Login
                         </a>
