@@ -9,17 +9,20 @@ export default function Login() {
     const navigate = useNavigate()
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
     function handleLogin(e) {
+        setIsLoading(true)
         e.preventDefault();
         console.log(email, password);
         signInWithEmailAndPassword(auth, email, password)
             .then((response) => {
                 const user = response.user;
+                localStorage.setItem("userId", response.user.uid)
                 console.log(user);
                 Swal.fire({
                     title: 'success',
-                    text: 'Successfully create account',
+                    text: 'Login Successfully',
                     icon: 'success',
                     confirmButtonText: 'Continue'
                 })
@@ -29,13 +32,14 @@ export default function Login() {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log(errorCode);
-                console.log(errorMessage);  
+                console.log(errorMessage);
                 Swal.fire({
                     title: 'Something Went Wrong',
                     text: error.message,
                     icon: 'error',
                     confirmButtonText: 'OK'
-                })              
+                })
+                setIsLoading(false)
             });
     }
 
@@ -48,7 +52,7 @@ export default function Login() {
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600 ">
                         Don&apos;t have an account?{" "}
-                        <a href='#' onClick={ () => navigate('/signup')}
+                        <a href='#' onClick={() => navigate('/signup')}
                             className="font-semibold text-black transition-all duration-200 hover:underline" >
                             Create a free account
                         </a>
@@ -84,11 +88,18 @@ export default function Login() {
                                 </div>
                             </div>
                             <div>
-                                <button type="button"
-                                    onClick={handleLogin}
-                                    className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80" >
-                                    Get started
-                                </button>
+                                {isLoading ?
+                                    <div className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white" disabled>
+                                        <img src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/a/0/4/a047bb6e4236686095168948698596f6ceb059e8.gif" className="w-8 h-8 object-cover scale-125 text-white bg-white" alt="" />
+                                    </div>
+                                    :
+
+                                    <button type="button"
+                                        onClick={handleLogin}
+                                        className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white" >
+                                        Get started
+                                    </button>
+                                }
                             </div>
                         </div>
                     </form>

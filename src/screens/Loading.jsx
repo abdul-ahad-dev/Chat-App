@@ -10,9 +10,9 @@ export default function Loading() {
     })
 
     const checkUser = async () => {
-        const userUID = await localStorage.getItem('userUID')
+        const userUID = await localStorage.getItem('userId')
 
-        if (userUID) navigate('/home')
+        if (userUID !== null) navigate('/home')
         else navigate('/login')
     }
 

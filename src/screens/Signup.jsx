@@ -1,4 +1,4 @@
-import {db, auth } from '../database/firebase.config'
+import { db, auth } from '../database/firebase.config'
 import { doc, setDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import Swal from 'sweetalert2'
@@ -14,19 +14,19 @@ export default function Signup() {
     const [password, setPassword] = useState("");
     const [phone, setPhone] = useState("");
     const [city, setCity] = useState("");
-    const [gender, setGender] = useState("")
+    const [gender, setGender] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
 
     function handleSignup(e) {
         e.preventDefault();
+        setIsLoading(true)
         console.log("clicked")
-        console.log(email, password, name, phone, city, gender)
-        console.log(typeof email, typeof password, typeof name, typeof phone, typeof city, typeof gender);
-
 
         createUserWithEmailAndPassword(auth, email, password)
             .then(async (response) => {
                 const uid = response.user.uid;
+                localStorage.setItem("userId", uid)
                 const userData = { name, email, phone, city, gender, uid }
                 await setDoc(doc(db, "users", uid), userData)
 
@@ -39,6 +39,7 @@ export default function Signup() {
                 navigate('/login')
             })
             .catch((error) => {
+                setIsLoading(false)
                 console.log(error);
                 console.error("Error Code:", error.code);
                 console.error("Error Message:", error.message);
@@ -63,7 +64,7 @@ export default function Signup() {
                     </h2>
                     <p className="mt-2 text-center text-sm text-gray-600 ">
                         have an account?{" "}
-                        <a href="#" title="" onClick={ () => navigate('/login')}
+                        <a href="#" title="" onClick={() => navigate('/login')}
                             className="font-semibold text-black transition-all duration-200 hover:underline" >
                             Login
                         </a>
@@ -120,10 +121,16 @@ export default function Signup() {
                                         id="countries"
                                         className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                     >
-                                        <option disabled selected="">Choose a country</option>
+                                        <option disabled selected>Choose a country</option>
+                                        <option value="PK">Pakistan</option>
+                                        <option value="IN">India</option>
+                                        <option value="BD">Bangladesh</option>
+                                        <option value="AE">United Arab Emirates</option>
+                                        <option value="SA">Saudi Arabia</option>
                                         <option value="US">United States</option>
                                         <option value="CA">Canada</option>
-                                        <option value="FR">France</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="AU">Australia</option>
                                         <option value="DE">Germany</option>
                                     </select>
                                 </div>
@@ -210,11 +217,18 @@ export default function Signup() {
                             </div>
 
                             <div>
-                                <button type="button"
-                                    onClick={handleSignup}
-                                    className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80" >
-                                    Create Account
-                                </button>
+                                {isLoading ?
+                                    <div className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white" disabled>
+                                        <img src="https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/a/0/4/a047bb6e4236686095168948698596f6ceb059e8.gif" className="w-8 h-8 object-cover scale-125 text-white bg-white" alt="" />
+                                    </div>
+                                    :
+
+                                    <button type="button"
+                                        onClick={handleSignup}
+                                        className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white" >
+                                        Get started
+                                    </button>
+                                }
                             </div>
 
                         </div>
