@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import user from '../assets/user.png'
 
 
 export default function Navbar() {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isMenuOpen, setMenuOpen] = useState(false);
+
+
     return (
 
-
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
+        <nav className="bg-white border-gray-200 dark:bg-gray-900 border-b border-black">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img
@@ -17,7 +19,7 @@ export default function Navbar() {
                         alt="Flowbite Logo"
                     />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                        Flowbite
+                        Chat Hub
                     </span>
                 </a>
 
@@ -31,8 +33,8 @@ export default function Navbar() {
                     >
                         <span className="sr-only">Open user menu</span>
                         <img
-                            className="w-8 h-8 rounded-full"
-                            src="/docs/images/people/profile-picture-3.jpg"
+                            className="w-8 h-8 object-cover bg-center bg-gray-400 rounded-full"
+                            src={user}
                             alt="user photo"
                         />
                     </button>
@@ -45,10 +47,10 @@ export default function Navbar() {
                         >
                             <div className="px-4 py-3">
                                 <span className="block text-sm text-gray-900 dark:text-white">
-                                    Bonnie Green
+                                    Abdul Ahad
                                 </span>
                                 <span className="block text-sm text-gray-500 truncate dark:text-gray-400">
-                                    name@flowbite.com
+                                    abdulahad@gmail.com
                                 </span>
                             </div>
                             <ul className="py-2" aria-labelledby="user-menu-button">
@@ -110,12 +112,12 @@ export default function Navbar() {
                         </li>
                         <li>
                             <Link to='' className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white">
-                                About
+                                Chat
                             </Link>
                         </li>
                         <li>
                             <Link to='' className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white">
-                                Services
+                                Marketplace
                             </Link>
                         </li>
                         <li>
