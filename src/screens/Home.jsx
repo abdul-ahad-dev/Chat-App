@@ -13,11 +13,14 @@ export default function Home() {
     console.log("~~Home~", prams);
     
     const [users, setUsers] = useState([])
+    const [myUid, setUid] = useState('')
     useEffect(() => {
         getUsers()
     }, [])
 
     const getUsers = async () => {
+        let uid = await localStorage.getItem("userId")
+        setUid(uid)
         const list = []
         const dbSnap = await getDocs(collection(db, "users"));
         dbSnap.forEach(item => {
@@ -35,7 +38,7 @@ export default function Home() {
             <Navbar />
 
             {users.map(item => (
-                <div onClick={() => naviagate('/chat', { state: item })} key={item.uid} className="w-11/12 mx-auto mt-4 flex justify-between bg-gray-100 rounded-xl shadow-lg p-4">
+                <div onClick={() => naviagate('/chat', { state: {...item, myUid} })} key={item.uid} className="w-11/12 mx-auto mt-4 flex justify-between bg-gray-100 rounded-xl shadow-lg p-4">
                     <div className="flex items-center">
                         <img
                             className="w-8 h-8 mr-2 rounded-full shadow-md"

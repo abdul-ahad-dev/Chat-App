@@ -1,4 +1,5 @@
-import { addDoc, collection } from "firebase/firestore";
+import { db } from '../database/firebase.config'
+import { onSnapshot, getDocs, query, addDoc, collection, where } from 'firebase/firestore';
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import back from '../assets/back.png'
@@ -8,58 +9,35 @@ export default function Chat() {
 
     const naviagte = useNavigate()
     const { state } = useLocation()
-    console.log("state", state);
-    
-
     const [message, setMessage] = useState([])
     const [chatList, setChatList] = useState([])
 
-    const [messages, setMessages] = useState([
-        { name: 'John Doe', text: "Hey, how's it going?", avatar: '/placeholder-user.jpg', fallback: 'JD', isSender: false },
-        { name: 'Jane Smith', text: 'Pretty good, thanks for asking!', avatar: '/placeholder-user.jpg', fallback: 'JS', isSender: true },
-        { name: 'Bob Johnson', text: 'Awesome, glad to hear it!', avatar: '/placeholder-user.jpg', fallback: 'BJ', isSender: false },
-    ]);
 
-    const [inputValue, setInputValue] = useState('');
+    useEffect(() => {
+        const q = query(collection(db, "chat"), where(state.uid, "==", true), where(state.myUid, "==", true));
+        const unsubscribe = onSnapshot(q, (docSnap) => {
+            const list = [];
+            docSnap.forEach((doc) => {
+                list.push(doc.data());
+            });
+            const sortList = list.sort((a, b) => a.createdAt - b.createdAt);
+            setChatList(list);
+        });
 
-    const handleSendMessage = (message) => {
-        const newMessage = {
-            name: 'You',
-            text: message,
-            avatar: '/placeholder-user.jpg',
-            fallback: 'You',
-            isSender: true,
-        };
-        setMessages([...messages, newMessage]);
+        return () => unsubscribe();
+    }, [])
 
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (inputValue.trim()) {
-            handleSendMessage(inputValue);
-            setInputValue('');
-        }
-    };
-
-
-    // console.log("~~Home~chat", prams);
-    // useEffect(() => {
-    //     getMessages()
-    // }, [])
-
-    // const getMessages = async () => {
-    // }
 
     const sendMessage = async () => {
         let myUid = await localStorage.getItem("userId")
 
-        addDoc(collection(db, "messages"), {
+        addDoc(collection(db, "chat"), {
             message: message,
-            [myUid]: true,
+            [state.myUid]: true,
             [state.uid]: true,
             createdAt: Date.now(),
         })
+
     }
 
     return (
@@ -72,7 +50,7 @@ export default function Chat() {
 
             <div className="flex flex-col h-[80vh] w-full mx-auto rounded-b-2xl bg-gray-100 shadow-lg">
                 <div className="flex-1 overflow-auto p-4 space-y-4">
-                    {messages.map((message, index) => (
+                    {chatList.map((message, index) => (
                         <div
                             key={index}
                             className={`flex items-start gap-4 ${message.isSender ? 'justify-end' : ''}`}
