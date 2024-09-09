@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import back from '../assets/back.png'
 import user from '../assets/user.png'
+import moment from 'moment';
 
 export default function Chat() {
 
@@ -22,6 +23,8 @@ export default function Chat() {
             });
             const sortList = list.sort((a, b) => a.createdAt - b.createdAt);
             setChatList(list);
+            console.log(list);
+
         });
 
         return () => unsubscribe();
@@ -29,47 +32,39 @@ export default function Chat() {
 
 
     const sendMessage = async () => {
+        if (!message) return;
+        
         let myUid = await localStorage.getItem("userId")
 
         addDoc(collection(db, "chat"), {
             message: message,
             [state.myUid]: true,
             [state.uid]: true,
+            senderUid: myUid,
             createdAt: Date.now(),
         })
-
+        setMessage('')
     }
 
     return (
         <>
             <div className="bg-blue-300 flex gap-3 items-center px-6 py-3">
-                <img src={back} className="h-5 w-5" alt="Back" />
-                <img src={user} className="h-12 w-12 rounded-full" alt="User" />
-                <h1 className="text-xl font-semibold">Abdul Ahad</h1>
+                <img src={back} className="h-8 w-8 rounded-xl active:scale-110" onClick={() => naviagte('/home')} alt="Back" />
+                <img src={user} className="h-12 w-12 ml-4 rounded-full" alt="User" />
+                <h1 className="text-2xl font-bold">Abdul Ahad</h1>
             </div>
 
-            <div className="flex flex-col h-[80vh] w-full mx-auto rounded-b-2xl bg-gray-100 shadow-lg">
-                <div className="flex-1 overflow-auto p-4 space-y-4">
-                    {chatList.map((message, index) => (
-                        <div
-                            key={index}
-                            className={`flex items-start gap-4 ${message.isSender ? 'justify-end' : ''}`}
-                        >
-                            <div
-                                className={`p-3 rounded-2xl max-w-[70%] ${message.isSender
-                                    ? 'bg-blue-600 text-white'
-                                    : 'bg-gray-300 text-black'
-                                    }`}
-                            >
-                                {!message.isSender && (
-                                    <div className="font-medium">{message.name}</div>
-                                )}
-                                <div>{message.text}</div>
+            <div className="flex flex-col h-[80vh] w-full mx-auto rounded-b-2xl bg-gray-50 shadow-lg">
+                <div className="flex-1 overflow-auto p-4 space-y-3">
+                    {chatList.map((item, index) => (
+                        <div key={index} className={`flex ${item.senderUid == state.myUid ? 'justify-start' : 'justify-end'}`}>
+                            <div className={`w-max rounded-3xl shadow-lg px-7 py-3 ${item.senderUid == state.myUid ? 'bg-gray-100' : 'bg-blue-100'}`}>
+                                <h1 className="font-semibold text-xl">{item.message}</h1>
+                                <h1 className="font-light text-sm text-gray-700">{moment(item.createdAt).startOf('second').fromNow()}</h1>
                             </div>
                         </div>
                     ))}
                 </div>
-
 
                 {/* Message Input */}
                 <div
