@@ -49,7 +49,7 @@ export default function Chat() {
     return (
         <>
             <div className="bg-blue-300 flex gap-3 items-center px-6 py-3">
-                <img src={back} className="h-8 w-8 rounded-xl active:scale-110" onClick={() => naviagte('/home')} alt="Back" />
+                <img src={back} className="h-8 w-8 rounded-xl active:scale-110" onClick={() => naviagte('/chatlist')} alt="Back" />
                 <img src={user} className="h-12 w-12 ml-4 rounded-full" alt="User" />
                 <h1 className="text-2xl font-bold">Abdul Ahad</h1>
             </div>

@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom"
+
 export default function NotFound() {
+    const naviagte = useNavigate()
     return (
         <div className="h-screen w-scree flex items-center justify-center px-2 md:px-0">
             <div>
@@ -11,6 +14,7 @@ export default function NotFound() {
                 </p>
                 <div className="mt-6 flex items-center space-x-3">
                     <button
+                        onClick={() => naviagte('/home')}
                         type="button"
                         className="inline-flex items-center rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                     >
