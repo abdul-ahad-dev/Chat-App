@@ -1,3 +1,4 @@
+import Card from "../components/Card";
 import Navbar from "../components/NavBar";
 
 export default function Marketplace() {
@@ -8,6 +9,9 @@ export default function Marketplace() {
             
             <div>
                 <h1>Marketplace</h1>
+            </div>
+            <div>
+                <Card />
             </div>
         </>
     )
