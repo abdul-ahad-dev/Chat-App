@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Navbar from "../components/NavBar";
 import user from '../assets/user.png'
 import { useLocation, useNavigate } from 'react-router-dom'
+import Footer from '../components/Footer';
 
 
 export default function ChatList() {
@@ -49,6 +50,8 @@ export default function ChatList() {
                     <button className="px-5 py-2 text-white bg-blue-600 font-semibold rounded-xl">Message</button>
                 </div>
             ))}
+
+            <Footer/>
         </>
 
     )

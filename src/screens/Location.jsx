@@ -1,6 +1,7 @@
 import Navbar from "../components/NavBar";
 import React from "react";
 import GoogleMapReact from 'google-map-react';
+import Footer from "../components/Footer";
 
 
 export default function Location() {
@@ -14,7 +15,8 @@ export default function Location() {
     };
 
     return (
-        <div className="w-screen h-screen bg-slate-500">
+        <>
+            <div className="w-screen h-screen bg-slate-500">
             <Navbar />
 
 
@@ -27,5 +29,9 @@ export default function Location() {
                 </GoogleMapReact>
             </div>
         </div>
+
+        <Footer/>
+        </>
+
     )
 }

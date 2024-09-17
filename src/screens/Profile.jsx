@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import Navbar from "../components/NavBar";
 
 export default function Profile() {
@@ -5,6 +6,8 @@ export default function Profile() {
         <>
             <Navbar/>
             <h1>Profile</h1>
+
+            <Footer/>
         </>
     )
 }
