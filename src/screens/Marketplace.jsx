@@ -1,19 +1,12 @@
 import productData from '../constant/productData';
-import React, { useEffect } from "react";
 import Card from "../components/Card";
-import Navbar from "../components/NavBar";
-import { data } from 'autoprefixer';
-import Footer from '../components/Footer';
 
 export default function Marketplace() {
 
     const data = productData.values
 
     return (
-
-        <>
-            <Navbar />
-
+        <div>
             <img
                 className="w-full min-h-max object-cover mb-4"
                 src="https://img.freepik.com/free-vector/flat-design-shopping-center-twitch-banner_23-2149337409.jpg?w=740&t=st=1726503580~exp=1726504180~hmac=0eb84b502551f973ae53384dfe5dae65a070df6322eb861c5cbaf67a200ecf85"
@@ -29,8 +22,6 @@ export default function Marketplace() {
                     />
                 ))}
             </div>
-
-            <Footer/>
-        </>
+        </div>
     )
 }

@@ -1,11 +1,7 @@
-import Navbar from "../components/NavBar";
-import React from "react";
 import GoogleMapReact from 'google-map-react';
-import Footer from "../components/Footer";
 
 
 export default function Location() {
-
     const defaultProps = {
         center: {
             lat: 10.99835602,
@@ -15,11 +11,7 @@ export default function Location() {
     };
 
     return (
-        <>
-            <div className="w-screen h-screen bg-slate-500">
-            <Navbar />
-
-
+        <div className="w-screen py-20 bg-slate-500">
             <div className="h-[80vh] w-11/12 mx-auto">
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: "" }}
@@ -29,9 +21,5 @@ export default function Location() {
                 </GoogleMapReact>
             </div>
         </div>
-
-        <Footer/>
-        </>
-
-    )
-}
+    );
+};

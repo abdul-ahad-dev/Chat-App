@@ -1,13 +1,8 @@
-import Footer from '../components/Footer'
-import Navbar from '../components/NavBar'
-
 export default function Home() {
 
     return (
-        <>
-            <Navbar />
-
-            <Footer />
-        </>
+        <div className="min-h-[70vh]">
+            <h1>Home Page</h1>
+        </div>
     )
 }

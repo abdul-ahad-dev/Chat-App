@@ -1,13 +1,7 @@
-import Footer from "../components/Footer";
-import Navbar from "../components/NavBar";
-
 export default function Profile() {
-    return(
-        <>
-            <Navbar/>
+    return (
+        <div className="min-h-[70vh]">
             <h1>Profile</h1>
-
-            <Footer/>
-        </>
-    )
-}
+        </div>
+    );
+};

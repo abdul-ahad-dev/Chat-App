@@ -1,5 +1,5 @@
 import { db } from '../database/firebase.config'
-import { onSnapshot, getDocs, query, addDoc, collection, where } from 'firebase/firestore';
+import { onSnapshot, query, addDoc, collection, where } from 'firebase/firestore';
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import back from '../assets/back.png'
@@ -22,9 +22,8 @@ export default function Chat() {
                 list.push(doc.data());
             });
             const sortList = list.sort((a, b) => a.createdAt - b.createdAt);
-            setChatList(list);
+            setChatList(sortList);
             console.log(list);
-
         });
 
         return () => unsubscribe();

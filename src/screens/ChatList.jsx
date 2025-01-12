@@ -1,10 +1,8 @@
 import { db } from '../database/firebase.config'
 import { collection, getDocs } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import Navbar from "../components/NavBar";
 import user from '../assets/user.png'
-import { useLocation, useNavigate } from 'react-router-dom'
-import Footer from '../components/Footer';
+import { useNavigate } from 'react-router-dom'
 
 
 export default function ChatList() {
@@ -12,7 +10,6 @@ export default function ChatList() {
     const [myUid, setUid] = useState('')
 
     const naviagate = useNavigate()
-    const prams = useLocation()
 
     useEffect(() => {
         getUsers()
@@ -31,10 +28,7 @@ export default function ChatList() {
 
 
     return (
-
-        <>
-             <Navbar />
-
+        <div className="min-h-[70vh]">
             {users.map(item => (
                 <div onClick={() => naviagate('/chat', { state: { ...item, myUid } })} key={item.uid} className="w-11/12 mx-auto mt-4 flex justify-between bg-gray-100 cursor-pointer rounded-xl shadow-lg p-4">
                     <div className="flex items-center">
@@ -50,9 +44,6 @@ export default function ChatList() {
                     <button className="px-5 py-2 text-white bg-blue-600 font-semibold rounded-xl">Message</button>
                 </div>
             ))}
-
-            <Footer/>
-        </>
-
-    )
-} 
+        </div>
+    );
+};
